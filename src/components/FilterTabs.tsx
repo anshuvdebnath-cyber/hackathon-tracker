@@ -7,6 +7,12 @@ interface FilterTabsProps {
   hackathons: Hackathon[];
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  counts?: {
+    all: number;
+    upcoming: number;
+    ongoing: number;
+    completed: number;
+  };
 }
 
 export const FilterTabs: React.FC<FilterTabsProps> = ({
@@ -15,8 +21,9 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
   hackathons,
   searchQuery,
   setSearchQuery,
+  counts: propCounts,
 }) => {
-  const counts = {
+  const counts = propCounts || {
     all: hackathons.length,
     upcoming: hackathons.filter(h => h.status === 'upcoming').length,
     ongoing: hackathons.filter(h => h.status === 'ongoing').length,

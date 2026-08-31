@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Hackathon, ActiveTab, ActiveNavView, NotificationSettings } from './types';
 import {
   apiFetchHackathons,
@@ -7,6 +7,7 @@ import {
   apiDeleteHackathon,
   apiResetHackathons,
   apiImportHackathons,
+  calculateStatus,
   playSound,
   triggerCelebration,
 } from './utils';
@@ -25,8 +26,8 @@ import { NotificationModal } from './components/NotificationModal';
 import { DeleteConfirmModal } from './components/DeleteConfirmModal';
 
 export default function App() {
-  // Application State
-  const [hackathons, setHackathons] = useState<Hackathon[]>([]);
+  // Application State - holds all tracked hackathons
+  const [allHackathons, setAllHackathons] = useState<Hackathon[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -122,19 +123,65 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const data = await apiFetchHackathons(activeTab, searchQuery);
-      setHackathons(data);
+      const data = await apiFetchHackathons();
+      const withStatus = data.map(h => ({
+        ...h,
+        status: calculateStatus(h),
+      }));
+      setAllHackathons(withStatus);
     } catch (err: any) {
       console.error('Error fetching hackathons:', err);
       setError(err.message || 'Failed to connect to backend server');
     } finally {
       setLoading(false);
     }
-  }, [activeTab, searchQuery]);
+  }, []);
 
   useEffect(() => {
     loadHackathons();
   }, [loadHackathons]);
+
+  // Periodic real-time update of hackathon statuses based on current clock
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAllHackathons(prev =>
+        prev.map(h => {
+          const currentStatus = calculateStatus(h);
+          return currentStatus !== h.status ? { ...h, status: currentStatus } : h;
+        })
+      );
+    }, 10000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Filter hackathons by active search query
+  const searchFilteredHackathons = useMemo(() => {
+    if (!searchQuery.trim()) return allHackathons;
+    const query = searchQuery.toLowerCase().trim();
+    return allHackathons.filter(
+      h =>
+        h.name.toLowerCase().includes(query) ||
+        (h.venue && h.venue.toLowerCase().includes(query)) ||
+        (h.notes && h.notes.toLowerCase().includes(query)) ||
+        (h.tags && h.tags.some(t => t.toLowerCase().includes(query)))
+    );
+  }, [allHackathons, searchQuery]);
+
+  // Real-time live tab counts based on current items
+  const tabCounts = useMemo(() => {
+    return {
+      all: searchFilteredHackathons.length,
+      upcoming: searchFilteredHackathons.filter(h => h.status === 'upcoming').length,
+      ongoing: searchFilteredHackathons.filter(h => h.status === 'ongoing').length,
+      completed: searchFilteredHackathons.filter(h => h.status === 'completed').length,
+    };
+  }, [searchFilteredHackathons]);
+
+  // Live boxes to display for the active section tab
+  const displayedHackathons = useMemo(() => {
+    if (activeTab === 'all') return searchFilteredHackathons;
+    return searchFilteredHackathons.filter(h => h.status === activeTab);
+  }, [searchFilteredHackathons, activeTab]);
 
   // Handle Create or Update
   const handleSaveHackathon = async (payload: Partial<Hackathon>) => {
@@ -227,7 +274,11 @@ export default function App() {
     setLoading(true);
     try {
       const resetList = await apiResetHackathons();
-      setHackathons(resetList);
+      const withStatus = resetList.map(h => ({
+        ...h,
+        status: calculateStatus(h),
+      }));
+      setAllHackathons(withStatus);
       if (settings.soundEnabled) playSound('success');
     } catch (err: any) {
       alert('Failed to reset data: ' + err.message);
@@ -242,7 +293,7 @@ export default function App() {
     setLoading(true);
     try {
       await apiImportHackathons([]);
-      setHackathons([]);
+      setAllHackathons([]);
       if (settings.soundEnabled) playSound('delete');
     } catch (err: any) {
       alert('Failed to clear data: ' + err.message);
@@ -256,7 +307,11 @@ export default function App() {
     setLoading(true);
     try {
       const imported = await apiImportHackathons(items);
-      setHackathons(imported);
+      const withStatus = imported.map(h => ({
+        ...h,
+        status: calculateStatus(h),
+      }));
+      setAllHackathons(withStatus);
       if (settings.soundEnabled) playSound('success');
     } catch (err: any) {
       throw err;
@@ -297,7 +352,7 @@ export default function App() {
               setCurrentView(v);
             }
           }}
-          hackathonCount={hackathons.length}
+          hackathonCount={allHackathons.length}
         />
 
         {/* Content Canvas */}
@@ -309,7 +364,7 @@ export default function App() {
               onUpdateSettings={handleUpdateSettings}
               canInstallPwa={Boolean(pwaInstallPrompt)}
               onInstallPwa={handleInstallPwa}
-              hackathons={hackathons}
+              hackathons={allHackathons}
               onResetData={handleResetData}
               onClearAllData={handleClearAllData}
               onImportData={handleImportData}
@@ -349,7 +404,8 @@ export default function App() {
                     if (settings.soundEnabled) playSound('click');
                     setActiveTab(tab);
                   }}
-                  hackathons={hackathons}
+                  hackathons={searchFilteredHackathons}
+                  counts={tabCounts}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
                 />
@@ -385,7 +441,7 @@ export default function App() {
                     </div>
                   ))}
                 </div>
-              ) : hackathons.length === 0 ? (
+              ) : displayedHackathons.length === 0 ? (
                 /* Empty State */
                 <div className="border-[3px] border-[#1a1c1c] bg-[#ffffff] neo-shadow-lg p-8 sm:p-12 text-center flex flex-col items-center justify-center gap-4">
                   <div className="text-5xl">⚡</div>
@@ -420,7 +476,7 @@ export default function App() {
                   id="hackathons-grid"
                   className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
                 >
-                  {hackathons.map((hackathon) => (
+                  {displayedHackathons.map((hackathon) => (
                     <HackathonCard
                       key={hackathon.id}
                       hackathon={hackathon}

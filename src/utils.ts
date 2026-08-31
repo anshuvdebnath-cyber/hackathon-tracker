@@ -9,6 +9,26 @@ import { Hackathon, ApiResponse } from './types';
 const API_BASE = '/api/hackathons';
 
 /**
+ * Dynamically determine the status of a hackathon:
+ * - 'ongoing': Current time is between startTime and endTime
+ * - 'upcoming': Current time is before startTime
+ * - 'completed': Current time is after endTime
+ */
+export function calculateStatus(hackathon: { startTime: string; endTime: string }): 'upcoming' | 'ongoing' | 'completed' {
+  const currentTime = new Date().getTime();
+  const start = new Date(hackathon.startTime).getTime();
+  const end = new Date(hackathon.endTime).getTime();
+
+  if (currentTime >= start && currentTime <= end) {
+    return 'ongoing';
+  } else if (currentTime < start) {
+    return 'upcoming';
+  } else {
+    return 'completed';
+  }
+}
+
+/**
  * Fetch all hackathons from backend with optional filters
  */
 export async function apiFetchHackathons(status?: string, search?: string): Promise<Hackathon[]> {
