@@ -1,5 +1,6 @@
 # ⚡ Hackathon Tracker PWA
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-hacktrick.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://hacktrick.vercel.app/)
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -14,6 +15,7 @@ A full-stack, installable **Progressive Web App (PWA)** with an Express backend 
 
 ## 📑 Table of Contents
 
+- [🔗 Live Demo](#-live-demo)
 - [✨ Key Features](#-key-features)
 - [🏗️ System Architecture](#️-system-architecture)
 - [📂 Directory Structure](#-directory-structure)
@@ -25,6 +27,14 @@ A full-stack, installable **Progressive Web App (PWA)** with an Express backend 
 - [📜 Available Scripts](#-available-scripts)
 - [🌐 Deployment](#-deployment)
 - [📄 License](#-license)
+
+---
+
+## 🔗 Live Demo
+
+Experience the live application hosted on Vercel:
+
+👉 **[https://hacktrick.vercel.app/](https://hacktrick.vercel.app/)**
 
 ---
 
