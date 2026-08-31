@@ -21,10 +21,8 @@ export const PwaInstallBanner: React.FC<PwaInstallBannerProps> = ({
       <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Left: Icon & Text (Matching Image 5) */}
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="bg-[#ffffff] border-[2px] border-[#1a1c1c] p-2 shrink-0 flex items-center justify-center neo-shadow-sm">
-            <span className="material-symbols-outlined text-[#1a1c1c] text-2xl font-bold">
-              download_for_offline
-            </span>
+          <div className="w-11 h-11 bg-[#ffffff] border-[2px] border-[#1a1c1c] p-0.5 shrink-0 flex items-center justify-center neo-shadow-sm overflow-hidden">
+            <img src="/icons/icon-192.png" alt="HACK.TRACK App Icon" className="w-full h-full object-cover" />
           </div>
 
           <div>

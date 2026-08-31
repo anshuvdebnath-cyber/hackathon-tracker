@@ -7,12 +7,14 @@
  * ============================================================================
  */
 
-const CACHE_NAME = 'hacktrack-v1.0.4';
+const CACHE_NAME = 'hacktrack-v1.0.5';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icons/icon.svg',
+  '/favicon.ico',
+  '/icons/favicon-32x32.png',
+  '/icons/apple-touch-icon.png',
   '/icons/icon-192.png',
   '/icons/icon-512.png'
 ];

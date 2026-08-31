@@ -30,10 +30,8 @@ export const Header: React.FC<HeaderProps> = ({
         onClick={() => setCurrentView('dashboard')}
         className="flex items-center gap-2 cursor-pointer select-none group"
       >
-        <div className="bg-[#1a1c1c] text-[#ffd700] p-1.5 border-[2px] border-[#1a1c1c] neo-shadow-sm group-hover:-translate-y-0.5 transition-transform flex items-center justify-center">
-          <span className="material-symbols-outlined text-xl leading-none" style={{ fontVariationSettings: "'FILL' 1" }}>
-            terminal
-          </span>
+        <div className="w-9 h-9 bg-[#ffd700] border-[2px] border-[#1a1c1c] neo-shadow-sm group-hover:-translate-y-0.5 transition-transform flex items-center justify-center overflow-hidden shrink-0">
+          <img src="/icons/icon-192.png" alt="HACK.TRACK Logo" className="w-full h-full object-cover" />
         </div>
         <div className="flex flex-col">
           <h1 className="font-extrabold text-xl md:text-2xl tracking-tighter uppercase leading-none text-[#1a1c1c]">
