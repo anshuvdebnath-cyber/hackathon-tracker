@@ -438,6 +438,8 @@ export const HackathonModal: React.FC<HackathonModalProps> = ({
                     <option value="won">🏆 1ST PLACE WINNER</option>
                     <option value="finalist">⭐ FINALIST / TOP 10</option>
                     <option value="participant">🎖️ PARTICIPANT</option>
+                    <option value="failed">❌ FAILED / ELIMINATED</option>
+                    <option value="disqualified">🚫 DISQUALIFIED</option>
                     <option value="pending">⏳ PENDING</option>
                   </select>
                 </div>

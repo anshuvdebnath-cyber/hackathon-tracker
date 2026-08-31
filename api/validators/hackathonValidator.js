@@ -82,8 +82,8 @@ export const createHackathonValidator = [
   // Section 34 – Outcome validation (optional enum)
   body('outcome')
     .optional()
-    .isIn(['pending', 'won', 'finalist', 'participant'])
-    .withMessage("Outcome must be 'pending', 'won', 'finalist', or 'participant'"),
+    .isIn(['pending', 'won', 'finalist', 'participant', 'failed', 'disqualified'])
+    .withMessage("Outcome must be 'pending', 'won', 'finalist', 'participant', 'failed', or 'disqualified'"),
 
   // Section 34 – Notes validation
   body('notes')
@@ -159,8 +159,8 @@ export const updateHackathonValidator = [
 
   body('outcome')
     .optional()
-    .isIn(['pending', 'won', 'finalist', 'participant'])
-    .withMessage("Outcome must be 'pending', 'won', 'finalist', or 'participant'")
+    .isIn(['pending', 'won', 'finalist', 'participant', 'failed', 'disqualified'])
+    .withMessage("Outcome must be 'pending', 'won', 'finalist', 'participant', 'failed', or 'disqualified'")
 ];
 
 /**

@@ -37,20 +37,31 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
     return () => clearInterval(timer);
   }, [hackathon.registrationDeadline, hackathon.startTime, hackathon.endTime, hackathon.status]);
 
-  // Status-specific badges
+  // Status-specific badges and side-border styling
   const isOngoing = hackathon.status === 'ongoing';
   const isUpcoming = hackathon.status === 'upcoming';
   const isCompleted = hackathon.status === 'completed';
 
+  // Distinct category side-color box styling
+  const categorySideClass = isOngoing
+    ? 'border-l-[10px] border-l-[#00d084]'
+    : isUpcoming
+    ? 'border-l-[10px] border-l-[#ffd700]'
+    : 'border-l-[10px] border-l-[#8b5cf6]';
+
+  const categoryHeaderBg = isOngoing
+    ? 'bg-[#e6fcf0]'
+    : isUpcoming
+    ? 'bg-[#fffbe6]'
+    : 'bg-[#f4f0ff]';
+
   return (
     <article
       id={`hackathon-card-${hackathon.id}`}
-      className={`border-[3px] border-[#1a1c1c] neo-shadow-lg flex flex-col relative transition-all duration-150 group ${
-        isCompleted ? 'bg-[#f3f3f3] opacity-95' : 'bg-[#ffffff]'
-      }`}
+      className={`border-[3px] border-[#1a1c1c] ${categorySideClass} neo-shadow-lg flex flex-col relative transition-all duration-150 group bg-[#ffffff]`}
     >
       {/* Top Banner Status Tag */}
-      <div className="flex items-center justify-between border-b-[3px] border-[#1a1c1c] bg-[#eeeeee] px-3 py-1.5">
+      <div className={`flex items-center justify-between border-b-[3px] border-[#1a1c1c] ${categoryHeaderBg} px-3 py-1.5`}>
         {/* Mode Pill */}
         <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase bg-[#ffffff] border-[2px] border-[#1a1c1c] px-2 py-0.5 shadow-[2px_2px_0px_0px_#1a1c1c]">
           <span className="material-symbols-outlined text-sm leading-none">
@@ -59,21 +70,21 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
           <span>{hackathon.mode}</span>
         </div>
 
-        {/* Status indicator */}
+        {/* Status indicator badge */}
         <div className="flex items-center gap-1.5">
           {isOngoing && (
-            <div className="bg-[#ffd700] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] flex items-center gap-1.5 neo-pulse-ongoing">
+            <div className="bg-[#00d084] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] flex items-center gap-1.5 shadow-[2px_2px_0px_0px_#1a1c1c] neo-pulse-ongoing">
               <span className="w-2.5 h-2.5 bg-[#ba1a1a] rounded-full animate-ping"></span>
               ONGOING
             </div>
           )}
           {isUpcoming && (
-            <div className="bg-[#ffe16d] text-[#1a1c1c] font-mono text-[11px] font-bold uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c]">
+            <div className="bg-[#ffd700] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
               UPCOMING
             </div>
           )}
           {isCompleted && (
-            <div className="bg-[#dadada] text-[#4d4732] font-mono text-[11px] font-bold uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c]">
+            <div className="bg-[#8b5cf6] text-[#ffffff] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
               COMPLETED
             </div>
           )}
@@ -87,7 +98,9 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
           <h3
             onClick={() => onViewDetails(hackathon)}
             className={`font-black text-lg md:text-xl text-[#1a1c1c] tracking-tight uppercase cursor-pointer hover:underline decoration-3 underline-offset-2 ${
-              isCompleted && hackathon.outcome === 'participant' ? 'line-through decoration-[#7e775f]' : ''
+              isCompleted && (hackathon.outcome === 'failed' || hackathon.outcome === 'disqualified')
+                ? 'line-through decoration-[#ba1a1a]'
+                : ''
             }`}
           >
             {hackathon.name}
@@ -102,7 +115,7 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
           </div>
         </div>
 
-        {/* Outcome Badges for winners/finalists */}
+        {/* Outcome Badges */}
         {hackathon.resultsReceived && hackathon.outcome !== 'pending' && (
           <div className="my-1">
             {hackathon.outcome === 'won' && (
@@ -118,9 +131,21 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
               </div>
             )}
             {hackathon.outcome === 'participant' && (
-              <div className="bg-[#72ebff] text-[#1a1c1c] border-[2px] border-[#1a1c1c] px-2 py-0.5 font-mono text-xs font-bold uppercase inline-flex items-center gap-1">
+              <div className="bg-[#72ebff] text-[#1a1c1c] border-[2px] border-[#1a1c1c] px-2.5 py-0.5 font-mono text-xs font-bold uppercase inline-flex items-center gap-1">
                 <span className="material-symbols-outlined text-sm">check_circle</span>
                 <span>PARTICIPATED</span>
+              </div>
+            )}
+            {hackathon.outcome === 'failed' && (
+              <div className="bg-[#ffdad6] text-[#ba1a1a] border-[2px] border-[#ba1a1a] px-2.5 py-0.5 font-mono text-xs font-bold uppercase inline-flex items-center gap-1 shadow-[2px_2px_0px_0px_#ba1a1a]">
+                <span className="material-symbols-outlined text-sm">cancel</span>
+                <span>FAILED / ELIMINATED</span>
+              </div>
+            )}
+            {hackathon.outcome === 'disqualified' && (
+              <div className="bg-[#2f3131] text-[#ffb4ab] border-[2px] border-[#1a1c1c] px-2.5 py-0.5 font-mono text-xs font-bold uppercase inline-flex items-center gap-1 shadow-[2px_2px_0px_0px_#1a1c1c]">
+                <span className="material-symbols-outlined text-sm">block</span>
+                <span>DISQUALIFIED</span>
               </div>
             )}
           </div>

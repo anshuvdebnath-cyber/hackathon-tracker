@@ -4,7 +4,7 @@
 
 export type HackathonMode = 'online' | 'in-person';
 
-export type HackathonOutcome = 'pending' | 'won' | 'finalist' | 'participant';
+export type HackathonOutcome = 'pending' | 'won' | 'finalist' | 'participant' | 'failed' | 'disqualified';
 
 export type HackathonStatus = 'upcoming' | 'ongoing' | 'completed';
 

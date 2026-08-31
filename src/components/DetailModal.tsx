@@ -155,19 +155,29 @@ export const DetailModal: React.FC<DetailModalProps> = ({
             </div>
           </article>
 
-          {/* OUTCOME BANNER (FINALIST / WINNER) */}
+          {/* OUTCOME BANNER */}
           {hackathon.resultsReceived && hackathon.outcome !== 'pending' && (
             <section
               className={`border-[3px] border-[#1a1c1c] p-4 flex items-center justify-center neo-shadow-lg ${
                 hackathon.outcome === 'won'
-                  ? 'bg-[#ffd700]'
+                  ? 'bg-[#ffd700] text-[#1a1c1c]'
                   : hackathon.outcome === 'finalist'
-                  ? 'bg-[#fd68b3]'
-                  : 'bg-[#72ebff]'
+                  ? 'bg-[#fd68b3] text-[#1a1c1c]'
+                  : hackathon.outcome === 'participant'
+                  ? 'bg-[#72ebff] text-[#1a1c1c]'
+                  : hackathon.outcome === 'failed'
+                  ? 'bg-[#ffdad6] text-[#93000a] border-[#ba1a1a]'
+                  : 'bg-[#2f3131] text-[#ffb4ab]'
               }`}
             >
-              <h2 className="font-mono font-black text-xl md:text-2xl text-[#1a1c1c] uppercase tracking-tighter text-center flex items-center gap-2">
-                <span>{hackathon.outcome === 'won' ? '🏆 1ST PLACE WINNER!!!' : hackathon.outcome === 'finalist' ? '⭐ FINALIST!!!' : '🎖️ PARTICIPANT'}</span>
+              <h2 className="font-mono font-black text-xl md:text-2xl uppercase tracking-tighter text-center flex items-center gap-2">
+                <span>
+                  {hackathon.outcome === 'won' && '🏆 1ST PLACE WINNER!!!'}
+                  {hackathon.outcome === 'finalist' && '⭐ FINALIST / TOP 10!!!'}
+                  {hackathon.outcome === 'participant' && '🎖️ PARTICIPATED'}
+                  {hackathon.outcome === 'failed' && '❌ FAILED / ELIMINATED'}
+                  {hackathon.outcome === 'disqualified' && '🚫 DISQUALIFIED'}
+                </span>
               </h2>
             </section>
           )}
