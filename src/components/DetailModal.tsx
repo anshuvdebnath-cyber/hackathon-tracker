@@ -93,22 +93,45 @@ export const DetailModal: React.FC<DetailModalProps> = ({
           {/* HERO CARD */}
           <article className="bg-[#ffffff] border-[3px] border-[#1a1c1c] neo-shadow-lg flex flex-col overflow-hidden">
             {/* Top Status Header */}
-            <div className="bg-[#ffd700] border-b-[3px] border-[#1a1c1c] px-3 py-2 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div
-                  className={`w-3 h-3 rounded-full border border-[#1a1c1c] ${
-                    isOngoing ? 'bg-[#ba1a1a] animate-ping' : isUpcoming ? 'bg-[#705e00]' : 'bg-[#7e775f]'
-                  }`}
-                ></div>
-                <span className="font-mono text-xs font-black uppercase tracking-wider text-[#1a1c1c]">
-                  {hackathon.status}
-                </span>
-              </div>
+            {(() => {
+              const getHeroHeaderBg = () => {
+                if (isUpcoming) return 'bg-[#ef4444] text-[#ffffff]';
+                if (isOngoing) return 'bg-[#00c950] text-[#1a1c1c]';
+                if (hackathon.resultsReceived) {
+                  if (hackathon.outcome === 'won') return 'bg-[#ffd700] text-[#1a1c1c]';
+                  if (hackathon.outcome === 'finalist') return 'bg-[#fd68b3] text-[#1a1c1c]';
+                  if (hackathon.outcome === 'participant') return 'bg-[#00c5e8] text-[#1a1c1c]';
+                  if (hackathon.outcome === 'failed') return 'bg-[#dc2626] text-[#ffffff]';
+                  if (hackathon.outcome === 'disqualified') return 'bg-[#1a1c1c] text-[#ffb4ab]';
+                }
+                return 'bg-[#8b5cf6] text-[#ffffff]';
+              };
 
-              <span className="text-xs font-mono font-bold text-[#705e00]">
-                ID: {hackathon.id}
-              </span>
-            </div>
+              return (
+                <div className={`${getHeroHeaderBg()} border-b-[3px] border-[#1a1c1c] px-3 py-2 flex items-center justify-between`}>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-3 h-3 rounded-full border border-[#1a1c1c] ${
+                        isOngoing ? 'bg-[#ffffff] animate-ping' : 'bg-[#ffffff]'
+                      }`}
+                    ></div>
+                    <span className="font-mono text-xs font-black uppercase tracking-wider">
+                      {isUpcoming
+                        ? 'UPCOMING'
+                        : isOngoing
+                        ? 'ONGOING'
+                        : hackathon.resultsReceived && hackathon.outcome !== 'pending'
+                        ? `COMPLETED · ${hackathon.outcome.toUpperCase()}`
+                        : 'COMPLETED'}
+                    </span>
+                  </div>
+
+                  <span className="text-xs font-mono font-bold opacity-80">
+                    ID: {hackathon.id}
+                  </span>
+                </div>
+              );
+            })()}
 
             {/* Hero Body */}
             <div className="p-4 flex flex-col gap-3">

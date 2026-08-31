@@ -36,6 +36,13 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
       <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase overflow-x-auto pb-1.5 md:pb-0 scrollbar-none select-none">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.key;
+          const getActiveStyle = () => {
+            if (tab.key === 'upcoming') return 'bg-[#ef4444] text-[#ffffff] shadow-[2px_2px_0px_0px_#1a1c1c]';
+            if (tab.key === 'ongoing') return 'bg-[#00c950] text-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]';
+            if (tab.key === 'completed') return 'bg-[#8b5cf6] text-[#ffffff] shadow-[2px_2px_0px_0px_#1a1c1c]';
+            return 'bg-[#ffd700] text-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]';
+          };
+
           return (
             <button
               key={tab.key}
@@ -43,14 +50,14 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
               onClick={() => setActiveTab(tab.key)}
               className={`px-3 py-1.5 md:px-4 md:py-2 border-[2px] md:border-[3px] border-[#1a1c1c] uppercase font-bold tracking-wider transition-all flex items-center gap-1.5 shrink-0 ${
                 isActive
-                  ? 'bg-[#ffd700] text-[#1a1c1c] neo-shadow-sm translate-x-[-1px] translate-y-[-1px]'
+                  ? `${getActiveStyle()} translate-x-[-1px] translate-y-[-1px]`
                   : 'bg-[#ffffff] text-[#1a1c1c] hover:bg-[#eeeeee] active:translate-x-0.5 active:translate-y-0.5'
               }`}
             >
               <span>{tab.label}</span>
               <span
                 className={`text-[10px] md:text-[11px] px-1.5 py-0.2 border-[1.5px] border-[#1a1c1c] ${
-                  isActive ? 'bg-[#1a1c1c] text-[#ffd700]' : 'bg-[#f3f3f3] text-[#1a1c1c]'
+                  isActive ? 'bg-[#1a1c1c] text-[#ffffff]' : 'bg-[#f3f3f3] text-[#1a1c1c]'
                 }`}
               >
                 {tab.count}

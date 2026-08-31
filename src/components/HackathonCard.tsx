@@ -42,26 +42,113 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
   const isUpcoming = hackathon.status === 'upcoming';
   const isCompleted = hackathon.status === 'completed';
 
-  // Distinct category side-color box styling
-  const categorySideClass = isOngoing
-    ? 'border-l-[10px] border-l-[#00d084]'
-    : isUpcoming
-    ? 'border-l-[10px] border-l-[#ffd700]'
-    : 'border-l-[10px] border-l-[#8b5cf6]';
+  // Dynamic Side-Border & Header Colors based on status & result outcome
+  const getCategoryStyles = () => {
+    if (isUpcoming) {
+      return {
+        sideBorder: 'border-l-[10px] border-l-[#ef4444]',
+        headerBg: 'bg-[#fee2e2]',
+        statusBadge: (
+          <div className="bg-[#ef4444] text-[#ffffff] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
+            UPCOMING
+          </div>
+        )
+      };
+    }
 
-  const categoryHeaderBg = isOngoing
-    ? 'bg-[#e6fcf0]'
-    : isUpcoming
-    ? 'bg-[#fffbe6]'
-    : 'bg-[#f4f0ff]';
+    if (isOngoing) {
+      return {
+        sideBorder: 'border-l-[10px] border-l-[#00c950]',
+        headerBg: 'bg-[#e6fcf0]',
+        statusBadge: (
+          <div className="bg-[#00c950] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] flex items-center gap-1.5 shadow-[2px_2px_0px_0px_#1a1c1c] neo-pulse-ongoing">
+            <span className="w-2.5 h-2.5 bg-[#ba1a1a] rounded-full animate-ping"></span>
+            ONGOING
+          </div>
+        )
+      };
+    }
+
+    // Completed: Colors determined by results outcome
+    if (hackathon.resultsReceived) {
+      if (hackathon.outcome === 'won') {
+        return {
+          sideBorder: 'border-l-[10px] border-l-[#ffd700]',
+          headerBg: 'bg-[#fffbeb]',
+          statusBadge: (
+            <div className="bg-[#ffd700] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
+              🏆 WON
+            </div>
+          )
+        };
+      }
+      if (hackathon.outcome === 'finalist') {
+        return {
+          sideBorder: 'border-l-[10px] border-l-[#fd68b3]',
+          headerBg: 'bg-[#fdf2f8]',
+          statusBadge: (
+            <div className="bg-[#fd68b3] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
+              ⭐ FINALIST
+            </div>
+          )
+        };
+      }
+      if (hackathon.outcome === 'participant') {
+        return {
+          sideBorder: 'border-l-[10px] border-l-[#00c5e8]',
+          headerBg: 'bg-[#ecfeff]',
+          statusBadge: (
+            <div className="bg-[#00c5e8] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
+              🎖️ PARTICIPATED
+            </div>
+          )
+        };
+      }
+      if (hackathon.outcome === 'failed') {
+        return {
+          sideBorder: 'border-l-[10px] border-l-[#dc2626]',
+          headerBg: 'bg-[#fef2f2]',
+          statusBadge: (
+            <div className="bg-[#ffdad6] text-[#ba1a1a] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#ba1a1a] shadow-[2px_2px_0px_0px_#ba1a1a]">
+              ❌ FAILED
+            </div>
+          )
+        };
+      }
+      if (hackathon.outcome === 'disqualified') {
+        return {
+          sideBorder: 'border-l-[10px] border-l-[#1a1c1c]',
+          headerBg: 'bg-[#e5e5e5]',
+          statusBadge: (
+            <div className="bg-[#2f3131] text-[#ffb4ab] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
+              🚫 DISQUALIFIED
+            </div>
+          )
+        };
+      }
+    }
+
+    // Default completed with pending result
+    return {
+      sideBorder: 'border-l-[10px] border-l-[#8b5cf6]',
+      headerBg: 'bg-[#f5f3ff]',
+      statusBadge: (
+        <div className="bg-[#8b5cf6] text-[#ffffff] font-mono text-[11px] font-black uppercase px-2.5 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
+          COMPLETED
+        </div>
+      )
+    };
+  };
+
+  const { sideBorder, headerBg, statusBadge } = getCategoryStyles();
 
   return (
     <article
       id={`hackathon-card-${hackathon.id}`}
-      className={`border-[3px] border-[#1a1c1c] ${categorySideClass} neo-shadow-lg flex flex-col relative transition-all duration-150 group bg-[#ffffff]`}
+      className={`border-[3px] border-[#1a1c1c] ${sideBorder} neo-shadow-lg flex flex-col relative transition-all duration-150 group bg-[#ffffff]`}
     >
       {/* Top Banner Status Tag */}
-      <div className={`flex items-center justify-between border-b-[3px] border-[#1a1c1c] ${categoryHeaderBg} px-3 py-1.5`}>
+      <div className={`flex items-center justify-between border-b-[3px] border-[#1a1c1c] ${headerBg} px-3 py-1.5`}>
         {/* Mode Pill */}
         <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase bg-[#ffffff] border-[2px] border-[#1a1c1c] px-2 py-0.5 shadow-[2px_2px_0px_0px_#1a1c1c]">
           <span className="material-symbols-outlined text-sm leading-none">
@@ -72,22 +159,7 @@ export const HackathonCard: React.FC<HackathonCardProps> = ({
 
         {/* Status indicator badge */}
         <div className="flex items-center gap-1.5">
-          {isOngoing && (
-            <div className="bg-[#00d084] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] flex items-center gap-1.5 shadow-[2px_2px_0px_0px_#1a1c1c] neo-pulse-ongoing">
-              <span className="w-2.5 h-2.5 bg-[#ba1a1a] rounded-full animate-ping"></span>
-              ONGOING
-            </div>
-          )}
-          {isUpcoming && (
-            <div className="bg-[#ffd700] text-[#1a1c1c] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
-              UPCOMING
-            </div>
-          )}
-          {isCompleted && (
-            <div className="bg-[#8b5cf6] text-[#ffffff] font-mono text-[11px] font-black uppercase px-2 py-0.5 border-[2px] border-[#1a1c1c] shadow-[2px_2px_0px_0px_#1a1c1c]">
-              COMPLETED
-            </div>
-          )}
+          {statusBadge}
         </div>
       </div>
 
