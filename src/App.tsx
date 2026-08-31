@@ -301,7 +301,7 @@ export default function App() {
         />
 
         {/* Content Canvas */}
-        <main className="flex-1 w-full max-w-[1280px] mx-auto p-4 md:p-6 lg:p-8 flex flex-col gap-6 pb-24 md:pb-12">
+        <main className="flex-1 w-full max-w-[1280px] mx-auto px-3.5 py-4 sm:px-6 md:p-6 lg:p-8 flex flex-col gap-5 sm:gap-6 pb-24 md:pb-12">
           {/* VIEW: SETTINGS */}
           {currentView === 'settings' && (
             <SettingsView
@@ -435,16 +435,6 @@ export default function App() {
           )}
         </main>
       </div>
-
-      {/* Floating Action Button for Mobile */}
-      <button
-        id="mobile-fab-add"
-        onClick={handleOpenAdd}
-        className="md:hidden fixed bottom-20 right-4 w-14 h-14 bg-[#ffd700] text-[#1a1c1c] border-[3px] border-[#1a1c1c] rounded-full neo-shadow-lg flex items-center justify-center z-40 active:translate-x-1 active:translate-y-1 active:shadow-none transition-transform"
-        aria-label="Add Hackathon"
-      >
-        <span className="material-symbols-outlined text-3xl font-black">add</span>
-      </button>
 
       {/* Mobile Bottom Navigation */}
       <BottomNav

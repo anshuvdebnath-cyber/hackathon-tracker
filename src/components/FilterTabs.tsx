@@ -32,8 +32,8 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
 
   return (
     <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-      {/* Neo-brutalist Filter Buttons */}
-      <div className="flex flex-wrap gap-2 font-mono text-xs font-bold uppercase">
+      {/* Neo-brutalist Filter Buttons - Horizontally scrollable on mobile */}
+      <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase overflow-x-auto pb-1.5 md:pb-0 scrollbar-none select-none">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.key;
           return (
@@ -41,15 +41,15 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
               key={tab.key}
               id={`filter-tab-${tab.key}`}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-3 py-1.5 md:px-4 md:py-2 border-[3px] border-[#1a1c1c] uppercase font-bold tracking-wider transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 md:px-4 md:py-2 border-[2px] md:border-[3px] border-[#1a1c1c] uppercase font-bold tracking-wider transition-all flex items-center gap-1.5 shrink-0 ${
                 isActive
-                  ? 'bg-[#ffd700] text-[#1a1c1c] neo-shadow-sm translate-x-[-2px] translate-y-[-2px]'
-                  : 'bg-[#ffffff] text-[#1a1c1c] hover:bg-[#eeeeee] active:translate-x-1 active:translate-y-1'
+                  ? 'bg-[#ffd700] text-[#1a1c1c] neo-shadow-sm translate-x-[-1px] translate-y-[-1px]'
+                  : 'bg-[#ffffff] text-[#1a1c1c] hover:bg-[#eeeeee] active:translate-x-0.5 active:translate-y-0.5'
               }`}
             >
               <span>{tab.label}</span>
               <span
-                className={`text-[11px] px-1.5 py-0.2 border-[1.5px] border-[#1a1c1c] ${
+                className={`text-[10px] md:text-[11px] px-1.5 py-0.2 border-[1.5px] border-[#1a1c1c] ${
                   isActive ? 'bg-[#1a1c1c] text-[#ffd700]' : 'bg-[#f3f3f3] text-[#1a1c1c]'
                 }`}
               >
