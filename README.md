@@ -127,7 +127,6 @@ hackathon-tracker/
 ├── package.json                # Project dependencies and npm scripts
 ├── server.ts                   # Development & production server entry point
 ├── tsconfig.json               # TypeScript compiler configuration
-├── vercel.json                 # Vercel serverless deployment config
 └── vite.config.ts              # Vite build tool configuration
 ```
 
@@ -281,12 +280,17 @@ This repository incorporates security best practices to protect data, server res
 
 ## 🌐 Deployment
 
-### **Deploying to Vercel**
-The project includes a pre-configured `vercel.json` for zero-configuration serverless deployment:
-1. Push your code to GitHub.
-2. Import the repository into [Vercel](https://vercel.com).
-3. Set your environment variables (e.g., `GEMINI_API_KEY`) in the Vercel Dashboard.
-4. Click **Deploy**.
+To deploy and run the application in a production environment:
+
+1. **Build the production bundle and backend:**
+   ```bash
+   npm run build
+   ```
+2. **Start the production server:**
+   ```bash
+   npm run start
+   ```
+3. The server will serve both the React frontend and Express API endpoints on your configured `PORT` (default: `3000`).
 
 ---
 
