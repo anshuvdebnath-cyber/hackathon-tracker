@@ -1,0 +1,128 @@
+/**
+ * ============================================================================
+ * Neo-Brutalism Design System (Plain CSS)
+ * ============================================================================
+ * Key features:
+ * - Thick black borders (3px solid #1a1c1c)
+ * - Hard offset drop shadows (8px 8px 0 #000 / 4px 4px 0 #000)
+ * - Vibrant yellow (#ffd700), pink (#fd68b3), cyan (#72ebff) accents
+ * - Monospace & Display uppercase typography
+ * - Hard square corners
+ * ============================================================================
+ */
+
+:root {
+  --bg: #f9f9f9;
+  --surface: #ffffff;
+  --surface-alt: #f3f3f3;
+  --surface-dark: #1a1c1c;
+  --primary-yellow: #ffd700;
+  --primary-yellow-light: #ffe16d;
+  --accent-pink: #fd68b3;
+  --accent-cyan: #72ebff;
+  --text-dark: #1a1c1c;
+  --text-muted: #4d4732;
+  --border-dark: #1a1c1c;
+  --error-red: #ba1a1a;
+  --font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--bg);
+  color: var(--text-dark);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Neo-Brutalist utility classes */
+.neo-border {
+  border: 3px solid var(--border-dark);
+}
+
+.neo-shadow {
+  box-shadow: 6px 6px 0px 0px var(--border-dark);
+}
+
+.neo-shadow-lg {
+  box-shadow: 8px 8px 0px 0px var(--border-dark);
+}
+
+.neo-shadow-sm {
+  box-shadow: 4px 4px 0px 0px var(--border-dark);
+}
+
+.neo-btn {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  border: 3px solid var(--border-dark);
+  box-shadow: 6px 6px 0px 0px var(--border-dark);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+}
+
+.neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px 0px var(--border-dark);
+}
+
+.neo-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0px 0px var(--border-dark);
+}
+
+.neo-btn-sm {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid var(--border-dark);
+  box-shadow: 3px 3px 0px 0px var(--border-dark);
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.neo-btn-sm:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px 0px var(--border-dark);
+}
+
+.neo-btn-sm:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px var(--border-dark);
+}
+
+.neo-input {
+  width: 100%;
+  border: 3px solid var(--border-dark);
+  background-color: var(--surface);
+  font-family: inherit;
+  box-shadow: inset 3px 3px 0px 0px rgba(0,0,0,0.08);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.neo-input:focus {
+  outline: none;
+  background-color: #fff9d6;
+  border-color: var(--border-dark);
+}
+
+/* Pulse animation for ongoing hackathon badge */
+@keyframes neo-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.8); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+.neo-pulse {
+  animation: neo-pulse 2s infinite;
+}

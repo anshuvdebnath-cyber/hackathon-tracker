@@ -1,0 +1,6 @@
+{
+  "name": "Hackathon Tracker PWA",
+  "description": "A full-stack Neo-Brutalist Hackathon Tracker Progressive Web App (PWA) with Express backend, live countdowns, timeline, and deadline alerts.",
+  "requestFramePermissions": ["notifications"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

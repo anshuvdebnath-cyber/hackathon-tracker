@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Neo-Brutalist Background with hard offset shadow -->
+  <rect x="32" y="32" width="448" height="448" fill="#1a1c1c" rx="8" />
+  <rect x="24" y="24" width="448" height="448" fill="#ffd700" stroke="#1a1c1c" stroke-width="16" rx="8" />
+  
+  <!-- Terminal Prompt / Trophy Icon -->
+  <g transform="translate(60, 60)">
+    <!-- Terminal Header Bar -->
+    <rect x="0" y="0" width="376" height="60" fill="#1a1c1c" />
+    <circle cx="36" cy="30" r="10" fill="#fd68b3" />
+    <circle cx="70" cy="30" r="10" fill="#ffe16d" />
+    <circle cx="104" cy="30" r="10" fill="#72ebff" />
+    
+    <!-- Code prompt symbol >_ -->
+    <path d="M 40 130 L 100 180 L 40 230" fill="none" stroke="#1a1c1c" stroke-width="24" stroke-linecap="square" stroke-linejoin="miter" />
+    <line x1="120" y1="230" x2="200" y2="230" stroke="#1a1c1c" stroke-width="24" stroke-linecap="square" />
+    
+    <!-- Trophy Neo Badge -->
+    <g transform="translate(190, 110)">
+      <rect x="8" y="8" width="160" height="150" fill="#1a1c1c" />
+      <rect x="0" y="0" width="160" height="150" fill="#fd68b3" stroke="#1a1c1c" stroke-width="12" />
+      <text x="80" y="95" font-family="'Space Grotesk', 'Courier New', monospace" font-size="70" font-weight="900" text-anchor="middle" fill="#1a1c1c">🏆</text>
+    </g>
+    
+    <!-- Bottom Tag: HACK.TRACK -->
+    <g transform="translate(10, 275)">
+      <rect x="6" y="6" width="356" height="64" fill="#1a1c1c" />
+      <rect x="0" y="0" width="356" height="64" fill="#f9f9f9" stroke="#1a1c1c" stroke-width="10" />
+      <text x="178" y="44" font-family="'Space Grotesk', 'Arial Black', sans-serif" font-size="28" font-weight="900" letter-spacing="-1" text-anchor="middle" fill="#1a1c1c">HACK.TRACK</text>
+    </g>
+  </g>
+</svg>

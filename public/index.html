@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Hackathon Tracker PWA (Vanilla JS)</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header style="background: #fff; border-bottom: 3px solid #1a1c1c; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 0 0 #000;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="material-symbols-outlined" style="background: #1a1c1c; color: #ffd700; padding: 4px; border: 2px solid #1a1c1c;">terminal</span>
+      <h1 style="font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px;">HACK.TRACK</h1>
+    </div>
+    <div style="font-family: var(--font-mono); font-size: 11px; font-weight: bold; background: #ffd700; padding: 4px 8px; border: 2px solid #1a1c1c;">
+      PWA // EXPRESS API
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main style="max-width: 1200px; margin: 0 auto; padding: 24px 16px;">
+    <!-- Title & Controls -->
+    <div style="border-bottom: 3px solid #1a1c1c; padding-bottom: 16px; margin-bottom: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+      <div>
+        <h2 style="font-size: 32px; font-weight: 900; text-transform: uppercase;">DASHBOARD</h2>
+        <p style="font-family: var(--font-mono); font-size: 13px; color: #705e00; font-weight: bold;">TRACK, MANAGE, AND CONQUER YOUR HACKATHONS</p>
+      </div>
+    </div>
+
+    <!-- Hackathon Cards Grid -->
+    <section id="hackathon-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+      <!-- Populated dynamically by public/app.js -->
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
