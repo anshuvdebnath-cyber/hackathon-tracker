@@ -204,6 +204,8 @@ export default function App() {
     }
     setEditItem(null);
     setIsAddEditOpen(false);
+    setActiveTab('all');
+    setSearchQuery('');
     if (currentView === 'add') setCurrentView('dashboard');
     await loadHackathons();
   };

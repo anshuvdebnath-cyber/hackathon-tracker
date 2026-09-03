@@ -131,12 +131,13 @@ function loadFromDisk() {
     if (fs.existsSync(DATA_FILE)) {
       const fileData = fs.readFileSync(DATA_FILE, 'utf-8');
       const parsed = JSON.parse(fileData);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         hackathons = parsed;
+        return;
       }
     }
   } catch (err) {
-    console.warn('Notice: Could not load data from disk, using seed memory array.');
+    console.warn('Notice: Could not load data from disk, using memory array.');
   }
 }
 
@@ -174,6 +175,7 @@ export const HackathonModel = {
    * GET ALL Hackathons with optional status filter, search keyword, and sorting
    */
   findAll({ status, search, sort = 'startTime' } = {}) {
+    loadFromDisk();
     let result = hackathons.map(h => ({
       ...h,
       status: calculateStatus(h)
@@ -214,6 +216,7 @@ export const HackathonModel = {
    * GET Single Hackathon by ID
    */
   findById(id) {
+    loadFromDisk();
     const item = hackathons.find(h => h.id === id);
     if (!item) return null;
     return {
@@ -226,6 +229,7 @@ export const HackathonModel = {
    * CREATE New Hackathon
    */
   create(data) {
+    loadFromDisk();
     const newId = `hk-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
     const newHackathon = {
       id: newId,
@@ -261,6 +265,7 @@ export const HackathonModel = {
    * UPDATE Existing Hackathon
    */
   update(id, data) {
+    loadFromDisk();
     const index = hackathons.findIndex(h => h.id === id);
     if (index === -1) return null;
 
@@ -298,6 +303,7 @@ export const HackathonModel = {
    * DELETE Hackathon by ID
    */
   delete(id) {
+    loadFromDisk();
     const index = hackathons.findIndex(h => h.id === id);
     if (index === -1) return false;
 
